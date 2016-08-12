@@ -60,11 +60,9 @@ public class Login extends AppCompatActivity{
         setContentView(R.layout.login);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("Login");
-        }
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Login");
         Bundle b = getIntent().getExtras();
         title = (EditText) findViewById(R.id.title);
         pass = (EditText) findViewById(R.id.pass);

@@ -1,15 +1,50 @@
 <resources>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
-
+        <item name="android:activatedBackgroundIndicator">@drawable/drawer_list_selector</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:buttonStyle">@style/MyMaterialTheme.Button</item>
+        <item name="android:editTextStyle">@style/MyMaterialTheme.EditText</item>
+        <item name="android:alertDialogTheme">@style/MyMaterialTheme.AlertDialogTheme</item>
+        <item name="android:alertDialogStyle">@style/MyMaterialTheme.AlertDialogStyle</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Button" parent="android:Widget.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="MyMaterialTheme.SettingsButton" parent="android:Widget.Button">
+        <item name="android:textColor">@color/black_light</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:fontFamily">sans-serif-normal</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:drawableRight">@drawable/ic_keyboard_arrow_right_black_24dp</item>
+    </style>
+
+    <style name="MyMaterialTheme.EditText" parent="android:Widget.EditText">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
@@ -18,4 +53,77 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_marginLeft">10sp</item>
+        <item name="android:paddingLeft">10sp</item>
+    </style>
+
+    <style name="MyMaterialTheme.Toolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/black_light</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyMaterialTheme.Toolbar.Dark">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MyMaterialTheme.AlertDialogTheme">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowTitleStyle">@style/MyAlertDialogTitle</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:textAppearanceMedium">@style/MyAlertTextAppearance</item>
+        <!-- If you don't want your own button bar style use
+                @android:style/Holo.Light.ButtonBar.AlertDialog
+                and
+                ?android:attr/borderlessButtonStyle
+             instead of @style/MyButtonBar and @style/MyBorderlessButton -->
+        <item name="android:buttonBarButtonStyle">@style/MyBorderlessButton</item>
+    </style>
+
+    <style name="MyMaterialTheme.AlertDialogStyle">
+        <!-- Define background colors of title, message, buttons, etc. here -->
+        <item name="android:fullDark">@color/white</item>
+        <item name="android:topDark">@color/white</item>
+        <item name="android:centerDark">@color/white</item>
+        <item name="android:bottomDark">@color/white</item>
+        <item name="android:fullBright">@color/white</item>
+        <item name="android:topBright">@color/white</item>
+        <item name="android:centerBright">@color/white</item>
+        <item name="android:bottomBright">@color/white</item>
+        <item name="android:bottomMedium">@color/white</item>
+        <item name="android:centerMedium">@color/white</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="MyBorderlessButton">
+        <!-- Set background drawable and text size of the buttons here -->
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginRight">1dp</item>
+    </style>
+
+    <style name="MyAlertDialogTitle">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
+
+    <style name="MyAlertTextAppearance">
+        <!-- Set text size and color of title and message here -->
+        <item name="android:textSize"> 14dp </item>
+        <item name="android:textColor">@color/black_light</item>
+    </style>
 </resources>

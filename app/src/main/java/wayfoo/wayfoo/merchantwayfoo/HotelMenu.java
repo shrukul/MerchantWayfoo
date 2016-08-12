@@ -59,9 +59,9 @@ public class HotelMenu extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Menu");
         }
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String name = pref.getString("hotel", null);
@@ -73,15 +73,16 @@ public class HotelMenu extends AppCompatActivity {
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
-        final ProgressDialog progressDialog = new ProgressDialog(HotelMenu.this,
-                R.style.AppTheme_Dark_Dialog);
+//        final ProgressDialog progressDialog = new ProgressDialog(HotelMenu.this,
+//                R.style.AppTheme_Dark_Dialog);
 
         @Override
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Fetching Menu...");
-            progressDialog.show();
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Fetching Menu...");
+//            progressDialog.show();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -116,7 +117,7 @@ public class HotelMenu extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer result) {
             progressBar.setVisibility(View.GONE);
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
 
             if (result == 1) {
                 adapter = new MyRecyclerAdapterHotel(HotelMenu.this, feedsList);

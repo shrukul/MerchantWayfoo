@@ -111,15 +111,16 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
-        final ProgressDialog progressDialog = new ProgressDialog(Orders.this,
-                R.style.AppTheme_Dark_Dialog);
+//        final ProgressDialog progressDialog = new ProgressDialog(Orders.this,
+//                R.style.AppTheme_Dark_Dialog);
 
         @Override
         protected void onPreExecute() {
             //progressBar.setVisibility(View.VISIBLE);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Fetching Orders...");
-            progressDialog.show();
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Fetching Orders...");
+//            progressDialog.show();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -154,7 +155,7 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
         @Override
         protected void onPostExecute(Integer result) {
             progressBar.setVisibility(View.GONE);
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
             swipeRefreshLayout.setRefreshing(false);
 
             if (result == 1) {

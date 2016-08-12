@@ -4,50 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg_color"
     tools:context="wayfoo.wayfoo.merchantwayfoo.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/container_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-    </LinearLayout>
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="Menu"
         android:id="@+id/card"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:layout_margin="30dp" />
+        android:clickable="true"
+        style="@style/MyMaterialTheme.SettingsButton" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Orders"
         android:id="@+id/order"
-        android:layout_below="@+id/card"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:layout_margin="30dp" />
+        android:clickable="true"
+        style="@style/MyMaterialTheme.SettingsButton"/>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Reset Menu"
         android:id="@+id/avail"
-        android:layout_below="@+id/card"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:layout_margin="30dp" />
+        android:clickable="true"
+        style="@style/MyMaterialTheme.SettingsButton" />
 
 <!--    <ToggleButton
         android:layout_width="match_parent"

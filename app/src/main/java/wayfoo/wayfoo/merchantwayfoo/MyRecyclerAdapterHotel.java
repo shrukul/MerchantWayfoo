@@ -122,8 +122,6 @@ public class MyRecyclerAdapterHotel extends
             @Override
             public void onClick(View v) {
 
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(mc);
                 builder.setCancelable(true);
                 builder.setMessage("Are you sure you want to remove this item?");
@@ -152,8 +150,8 @@ public class MyRecyclerAdapterHotel extends
                 a.show();
                 Button bq = a.getButton(DialogInterface.BUTTON_NEGATIVE);
                 Button bq2 = a.getButton(DialogInterface.BUTTON_POSITIVE);
-                bq.setTextColor(ContextCompat.getColor(mc, R.color.colorPrimary));
-                bq2.setTextColor(ContextCompat.getColor(mc, R.color.colorPrimary));
+                bq.setTextColor(ContextCompat.getColor(mc, R.color.white));
+                bq2.setTextColor(ContextCompat.getColor(mc, R.color.white));
             }
         });
     }

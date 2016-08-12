@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Mechant");
-        }
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Mechant");
         menu = (Button) findViewById(R.id.card);
 //        tb = (ToggleButton) findViewById(R.id.open);
 //        if(getIntent().getExtras() != null && getIntent().getExtras().containsKey("state"))

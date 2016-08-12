@@ -3,17 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/container_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-    </LinearLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <EditText
         android:layout_width="match_parent"
@@ -21,7 +13,7 @@
         android:id="@+id/title"
         android:layout_gravity="center_horizontal"
         android:layout_margin="15dp"
-        android:hint="name" />
+        android:hint="Name" />
 
     <EditText
         android:layout_width="match_parent"
@@ -30,15 +22,16 @@
         android:inputType="textPassword"
         android:layout_gravity="center_horizontal"
         android:layout_margin="15dp"
-        android:hint="password" />
+        android:hint="Password" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="50dp"
         android:text="Login"
         android:id="@+id/post"
         android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary" />
+        style="@style/Widget.AppCompat.Button.Colored" />
 
     <ProgressBar
         android:layout_width="wrap_content"

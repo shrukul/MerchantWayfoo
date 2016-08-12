@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f68e56</color>
+    <color name="colorPrimaryDark">#ff1b202a</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="colorAccent">#ff0bc6a0</color>
+    <color name="white">#ffffffff</color>
+    <color name="bg_white">#ffffffff</color>
+    <color name="bg_color">#ffe0e1e3</color>
+    <color name="black_light">#9929303f</color>
+
+    <color name="splashback">#d5d4d3</color>
+
+
+    <color name="bg_view_sms">#ffd423</color>
+    <color name="bg_view_otp">#fc6d38</color>
+
+    <color name="apptheme_color">#33b5e5</color>
+
+    <color name="color_material_metaphor">#039BE5</color>
+    <color name="color_material_bold">#EC407A</color>
+    <color name="color_material_motion">#6A1B9A</color>
+    <color name="color_material_shadow">#E0E0E0</color>
+
+    <color name="color_dark_material_metaphor">#0277BD</color>
+    <color name="color_dark_material_bold">#D81B60</color>
+    <color name="color_dark_material_motion">#4A148C</color>
+
+
+</resources>
