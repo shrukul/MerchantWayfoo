@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
 /*    private ToggleButton tb;*/
 
-    @Override
-    public void onBackPressed() {
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//        System.exit(1);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

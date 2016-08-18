@@ -57,18 +57,17 @@ public class MyRecyclerAdapterHotel extends
 
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        protected ImageView imageView;
-        protected TextView textView, price;
+        protected TextView textView, price, itemID;
         Button plus;
         CardView card;
 
 
         public CustomViewHolder(View view) {
             super(view);
-            this.imageView = (ImageView) view.findViewById(R.id.veg);
             this.textView = (TextView) view.findViewById(R.id.title1);
             this.price = (TextView) view.findViewById(R.id.price);
             this.plus = (Button) view.findViewById(R.id.add);
+            this.itemID = (TextView) view.findViewById(R.id.itemID);
             mc = view.getContext();
             card = (CardView) view.findViewById(R.id.YogaCard);
         }
@@ -108,13 +107,11 @@ public class MyRecyclerAdapterHotel extends
         SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         customViewHolder.price.setText(SS);
-        Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.veg);
-        Bitmap b2 = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.nonveg);
-        if(feedItem.getVeg().toString().equals("0")){
-            customViewHolder.imageView.setImageBitmap(b);
-        }else{
-            customViewHolder.imageView.setImageBitmap(b2);
-        }
+        SS = new SpannableStringBuilder(
+                Html.fromHtml(feedItem.getItemID()));
+        SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
+                Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        customViewHolder.itemID.setText(SS);
         if(Html.fromHtml(feedItem.getAvailable()).equals("0")){
             customViewHolder.card.setCardBackgroundColor(Color.YELLOW);
         }

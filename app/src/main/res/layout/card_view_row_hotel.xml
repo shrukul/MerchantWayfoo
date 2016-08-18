@@ -32,14 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:weightSum="11">
-
-                <ImageView
-                    android:id="@+id/veg"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
+                android:weightSum="12">
 
                 <TextView
                     android:id="@+id/title1"
@@ -52,11 +45,20 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/itemID"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2.2"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp" />
+
+                <TextView
                     android:id="@+id/price"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="2.3"
+                    android:layout_weight="2.2"
                     android:gravity="center_vertical"
                     android:textSize="15sp" />
 
@@ -66,7 +68,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
-                    android:layout_weight="1.7"
+                    android:layout_weight="1.6"
                     android:background="@android:drawable/ic_delete" />
             </LinearLayout>
         </LinearLayout>

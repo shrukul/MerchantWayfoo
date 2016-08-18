@@ -99,10 +99,8 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        System.out.println("here");
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            System.out.println("!!");
             NavUtils.navigateUpFromSameTask(this);
             return true;
         } else

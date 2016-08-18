@@ -12,9 +12,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -56,7 +58,7 @@ public class PerOrder extends AppCompatActivity {
     AsyncHttpTask a;
     private Toolbar mToolbar;
     ListView listView;
-    Button confirm,done,cancel;
+    Button confirm, done, cancel;
     TextView phone, addr, price;
 
     @Override
@@ -66,6 +68,12 @@ public class PerOrder extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Order");
+        }
 
         phone = (TextView) findViewById(R.id.phone);
         addr = (TextView) findViewById(R.id.addr);
@@ -82,32 +90,42 @@ public class PerOrder extends AppCompatActivity {
         confirm = (Button) findViewById(R.id.confirm);
         cancel = (Button) findViewById(R.id.cancel);
         done = (Button) findViewById(R.id.done);
-        listView=(ListView)findViewById(R.id.listView1);
-        final String oid=b.getString("oid");
-        final String url = "http://wayfoo.com/perOrderMerchant.php?OID="+oid;
+        listView = (ListView) findViewById(R.id.listView1);
+        final String oid = b.getString("oid");
+        final String url = "http://wayfoo.com/perOrderMerchant.php?OID=" + oid;
         a = new AsyncHttpTask();
         a.execute(url);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfirmTask ct = new ConfirmTask();
-                ct.execute("1",oid);
+                ct.execute("1", oid);
             }
         });
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfirmTask ct = new ConfirmTask();
-                ct.execute("0",oid);
+                ct.execute("0", oid);
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfirmTask ct = new ConfirmTask();
-                ct.execute("2",oid);
+                ct.execute("2", oid);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
@@ -117,10 +135,10 @@ public class PerOrder extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            ///progressBar.setVisibility(View.VISIBLE);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Fetching Menu...");
-            progressDialog.show();
+            progressBar.setVisibility(View.VISIBLE);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Fetching Menu...");
+//            progressDialog.show();
 
         }
 
@@ -155,10 +173,10 @@ public class PerOrder extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer result) {
             progressBar.setVisibility(View.GONE);
-            progressDialog.dismiss();
+//            progressDialog.dismiss();
 
             if (result == 1) {
-                PerOrderAdapter adapter=new PerOrderAdapter(PerOrder.this, list);
+                PerOrderAdapter adapter = new PerOrderAdapter(PerOrder.this, list);
                 listView.setAdapter(adapter);
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(PerOrder.this);
@@ -184,7 +202,7 @@ public class PerOrder extends AppCompatActivity {
                         finish();
                     }
                 });
-                AlertDialog a=builder.create();
+                AlertDialog a = builder.create();
                 a.show();
                 Button bq = a.getButton(DialogInterface.BUTTON_NEGATIVE);
                 Button bq2 = a.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -198,14 +216,16 @@ public class PerOrder extends AppCompatActivity {
         try {
             JSONObject response = new JSONObject(result);
             JSONArray posts = response.optJSONArray("output");
-            list=new ArrayList<HashMap<String,String>>();
+            list = new ArrayList<HashMap<String, String>>();
 
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject post = posts.optJSONObject(i);
-                HashMap<String,String> temp=new HashMap<String, String>();
+                HashMap<String, String> temp = new HashMap<String, String>();
                 temp.put(FIRST_COLUMN, post.optString("Name"));
-                temp.put(SECOND_COLUMN,post.optString("Quantity"));
-                temp.put(THIRD_COLUMN, String.valueOf(Float.parseFloat(post.optString("Amount"))*Float.parseFloat(post.optString("Quantity"))));
+                temp.put(SECOND_COLUMN, post.optString("Quantity"));
+                System.out.println(post.optString("ItemID"));
+                System.out.println(post);
+                temp.put(THIRD_COLUMN, String.valueOf(Float.parseFloat(post.optString("Amount")) * Float.parseFloat(post.optString("Quantity"))));
                 list.add(temp);
             }
         } catch (JSONException e) {
@@ -273,7 +293,7 @@ public class PerOrder extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Intent i = new Intent(PerOrder.this,Orders.class);
+            Intent i = new Intent(PerOrder.this, Orders.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             // Add new Flag to start new Activity

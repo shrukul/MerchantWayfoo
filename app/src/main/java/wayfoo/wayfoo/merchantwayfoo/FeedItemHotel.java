@@ -4,27 +4,29 @@ package wayfoo.wayfoo.merchantwayfoo;
  * Created by Axle on 04/02/2016.
  */
 public class FeedItemHotel {
-    private String title,amt;
+    private String title,amt,itemID;
     private int b2;
     private String type,veg,price,available;
 
     FeedItemHotel(){}
 
-    FeedItemHotel(int b2, String title, String price, String veg, String amt, String type) {
+    FeedItemHotel(int b2, String title, String price, String veg, String amt, String type, String itemID) {
         this.title=title;
         this.b2=b2;
         this.veg=veg;
         this.type=type;
         this.price=price;
         this.amt=amt;
+        this.itemID=itemID;
     }
 
-    FeedItemHotel(String title, String price, String veg, String amt, String type) {
+    FeedItemHotel(String title, String price, String veg, String amt, String type, String itemID) {
         this.title=title;
         this.veg=veg;
         this.type=type;
         this.price=price;
         this.amt=amt;
+        this.itemID=itemID;
     }
 
     public String getTitle() {
@@ -81,5 +83,13 @@ public class FeedItemHotel {
 
     public String getAvailable() {
         return available;
+    }
+
+    public void setItemID(String itemID) {
+        this.itemID= itemID;
+    }
+
+    public String getItemID() {
+        return itemID;
     }
 }

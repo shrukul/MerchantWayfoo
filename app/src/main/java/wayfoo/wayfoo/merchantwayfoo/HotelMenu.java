@@ -165,6 +165,7 @@ public class HotelMenu extends AppCompatActivity {
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject post = posts.optJSONObject(i);
                 FeedItemHotel item = new FeedItemHotel();
+                item.setItemID(post.optString("ItemID"));
                 item.setID(Integer.parseInt(post.optString("ID")));
                 item.setTitle(post.optString("Name"));
                 item.setType(post.optString("Type"));

@@ -45,10 +45,10 @@ public class OrderListAdapter extends
                     int i = getAdapterPosition();
                     OrderListModel feedItem = feedItemList.get(i);
                     String pagenext;
-                    pagenext=Html.fromHtml(feedItem.getOID()).toString();
-                    String contact=Html.fromHtml(feedItem.getContact()).toString();
-                    String price=Html.fromHtml(feedItem.getTotal()).toString();
-                    String Address=Html.fromHtml(feedItem.getAddr()).toString();
+                    pagenext = Html.fromHtml(feedItem.getOID()).toString();
+                    String contact = Html.fromHtml(feedItem.getContact()).toString();
+                    String price = Html.fromHtml(feedItem.getTotal()).toString();
+                    String Address = Html.fromHtml(feedItem.getAddr()).toString();
                     Intent intent = new Intent(mc, PerOrder.class);
                     intent.putExtra("oid", pagenext);
                     intent.putExtra("contact", contact);
@@ -73,16 +73,16 @@ public class OrderListAdapter extends
         //View view = LayoutInflater.from(viewGroup.getContext()).inflate(
         //        R.layout.card_view_row_hotel, null);
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view_row_orders, null, true);
-        WindowManager windowManager = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
-        int height=windowManager.getDefaultDisplay().getHeight();
+        int height = windowManager.getDefaultDisplay().getHeight();
         view.setLayoutParams(new RecyclerView.LayoutParams(width, RecyclerView.LayoutParams.MATCH_PARENT));
         CustomViewHolder viewHolder = new CustomViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final CustomViewHolder customViewHolder,int i) {
+    public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
         final OrderListModel feedItem = feedItemList.get(i);
         Typeface font1 = Typeface.createFromAsset(mContext.getAssets(),
                 "font/RobotoCondensed-Regular.ttf");
@@ -93,12 +93,12 @@ public class OrderListAdapter extends
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         customViewHolder.price.setText(SS);
 
-        if(Html.fromHtml(feedItem.getConfirm()).toString().equals("0")){
+        if (Html.fromHtml(feedItem.getConfirm()).toString().equals("0")) {
             SS = new SpannableStringBuilder("Pending");
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             customViewHolder.textView.setText(SS);
-        }else{
+        } else {
             SS = new SpannableStringBuilder("Confirmed");
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
