@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -60,11 +61,18 @@ public class PerOrder extends AppCompatActivity {
     ListView listView;
     Button confirm, done, cancel;
     TextView phone, addr, price;
+    LinearLayout optionsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.perorder);
+
+        if(getIntent().getExtras().containsKey("showOptions") && getIntent().getExtras().getBoolean("showOptions") == false) {
+            optionsLayout = (LinearLayout) findViewById(R.id.optionsLayout);
+            optionsLayout.setVisibility(View.GONE);
+        }
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

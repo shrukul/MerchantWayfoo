@@ -54,6 +54,10 @@ public class OrderListAdapter extends
                     intent.putExtra("contact", contact);
                     intent.putExtra("addr", Address);
                     intent.putExtra("total", price);
+                    String className = mc.getClass().getName();
+                    if(className.substring(className.lastIndexOf('.') + 1).equals("OrderHistory")) {
+                        intent.putExtra("showOptions", false);
+                    }
                     mc.startActivity(intent);
                 }
             });
