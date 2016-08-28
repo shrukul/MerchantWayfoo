@@ -80,7 +80,7 @@ public class OrderListAdapter extends
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
         int height = windowManager.getDefaultDisplay().getHeight();
-        view.setLayoutParams(new RecyclerView.LayoutParams(width, RecyclerView.LayoutParams.MATCH_PARENT));
+        view.setLayoutParams(new RecyclerView.LayoutParams(width, RecyclerView.LayoutParams.WRAP_CONTENT));
         CustomViewHolder viewHolder = new CustomViewHolder(view);
         return viewHolder;
     }

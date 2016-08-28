@@ -44,9 +44,19 @@ public class RegistrationIntentService extends IntentService {
         // Make a call to Instance API
 
         InstanceID instanceID = InstanceID.getInstance(this);
-        String senderId = getResources().getString(R.string.gcm_defaultSenderId);
+
+        try {
+            instanceID.deleteInstanceID();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        instanceID = InstanceID.getInstance(this);
+
+        String senderId = getApplicationContext().getResources().getString(R.string.gcm_defaultSenderId);
         try {
             // request token that will be used by the server to send push notifications
+            System.out.println("senderID: " + senderId);
             token = instanceID.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
             Log.d(TAG, "GCM Registration Token: " + token);
 
