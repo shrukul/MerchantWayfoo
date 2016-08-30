@@ -106,17 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                });
                 AlertDialog a=builder.create();
                 a.show();
-                Button bq = a.getButton(DialogInterface.BUTTON_NEGATIVE);
-                Button bq2 = a.getButton(DialogInterface.BUTTON_POSITIVE);
-                bq.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
-                bq2.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
             }
         });
 /*        tb.setTextOff("Closed");
