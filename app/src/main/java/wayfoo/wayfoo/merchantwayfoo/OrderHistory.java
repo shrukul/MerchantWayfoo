@@ -3,9 +3,12 @@ package wayfoo.wayfoo.merchantwayfoo;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +16,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,16 +48,38 @@ public class OrderHistory extends AppCompatActivity {
     private List<OrderListModel> feedsList;
     private OrderListAdapter adapter;
     private ProgressBar progressBar;
+    LinearLayout lyt;
 
     String url = "";
-    String hotel,date;
+    String hotel, date;
     AsyncHttpTask a;
     SharedPreferences prefs;
+    Snackbar snackbar;
+    RelativeLayout orderHistory;
+    TextView errText;
+    Button retry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+
+        orderHistory = (RelativeLayout) findViewById(R.id.orderHistory);
+        lyt = (LinearLayout) findViewById(R.id.errLayout);
+        errText = (TextView) findViewById(R.id.errText);
+
+        retry = (Button) findViewById(R.id.retry);
+        retry.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                lyt.setVisibility(View.INVISIBLE);
+                snackbar.dismiss();
+                a = new AsyncHttpTask();
+                a.execute(url);
+            }
+        });
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -64,11 +93,11 @@ public class OrderHistory extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        hotel = prefs.getString("hotel","none");
+        hotel = prefs.getString("hotel", "none");
         date = getIntent().getExtras().getString("date");
         System.out.println(date);
 
-        url = "http://wayfoo.com/merchantOrderHistory.php?hotel=" + hotel+"&date="+date;
+        url = "http://wayfoo.com/merchantOrderHistory.php?hotel=" + hotel + "&date=" + date;
         a = new AsyncHttpTask();
         a.execute(url);
     }
@@ -89,22 +118,30 @@ public class OrderHistory extends AppCompatActivity {
                 urlConnection = (HttpURLConnection) url.openConnection();
                 int statusCode = urlConnection.getResponseCode();
 
+                Log.d("Order History", "status code : " + statusCode);
+                System.out.println("at order history");
+
                 if (statusCode == 200) {
-                    BufferedReader r = new BufferedReader(
-                            new InputStreamReader(
-                                    urlConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        response.append(line);
+                    try {
+                        BufferedReader r = new BufferedReader(
+                                new InputStreamReader(
+                                        urlConnection.getInputStream()));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = r.readLine()) != null) {
+                            response.append(line);
+                        }
+                        parseResult(response.toString());
+                        result = 1;
+                    } catch (Exception E) {
+                        result = 0;
                     }
-                    parseResult(response.toString());
-                    result = 1;
                 } else {
                     result = 0;
                 }
             } catch (Exception e) {
                 Log.d(TAG, e.getLocalizedMessage());
+                result = -1;
             }
             return result;
         }
@@ -116,39 +153,34 @@ public class OrderHistory extends AppCompatActivity {
             if (result == 1) {
                 adapter = new OrderListAdapter(OrderHistory.this, feedsList);
                 mRecyclerView.setAdapter(adapter);
+            } else if (result == 0) {
+                errText.setText("No Orders for the given day.");
+                lyt.setVisibility(View.VISIBLE);
+                snackbar = Snackbar
+                        .make(orderHistory, "No Orders for the given day.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        })
+                        .setActionTextColor(Color.YELLOW);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                snackbar.show();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(OrderHistory.this);
-                builder.setCancelable(true);
-                if (result == -1)
-                    builder.setMessage("Something seems to be wrong with the internet.");
-                else
-                    builder.setMessage("No Orders Received");
-                builder.setTitle("Oops!!");
-                builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                    }
-                });
-
-                builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                });
-                AlertDialog a = builder.create();
-                a.show();
-                Button bq = a.getButton(DialogInterface.BUTTON_NEGATIVE);
-                Button bq2 = a.getButton(DialogInterface.BUTTON_POSITIVE);
-                bq.setTextColor(ContextCompat.getColor(OrderHistory.this, R.color.colorPrimary));
-                bq2.setTextColor(ContextCompat.getColor(OrderHistory.this, R.color.colorPrimary));
+                errText.setText("No Internet Connection.");
+                lyt.setVisibility(View.VISIBLE);
+                snackbar = Snackbar
+                        .make(orderHistory, "No. Internet Connection.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        })
+                        .setActionTextColor(Color.YELLOW);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                snackbar.show();
             }
         }
     }
@@ -176,5 +208,15 @@ public class OrderHistory extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
     }
 }
