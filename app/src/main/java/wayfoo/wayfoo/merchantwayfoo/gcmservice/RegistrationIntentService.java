@@ -68,6 +68,7 @@ public class RegistrationIntentService extends IntentService {
             editor.commit();
 
         } catch (IOException e) {
+            System.out.println("senderID: " + senderId);
             e.printStackTrace();
         }
     }
