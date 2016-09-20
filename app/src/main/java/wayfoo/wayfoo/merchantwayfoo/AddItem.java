@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -91,6 +93,16 @@ public class AddItem extends AppCompatActivity implements AdapterView.OnItemSele
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     @Override

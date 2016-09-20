@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,7 +22,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,16 +47,36 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
     private static final String TAG = "My Orders";
     private List<OrderListModel> feedsList;
     private OrderListAdapter adapter;
-    private ProgressBar progressBar;
+    Snackbar snackbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     String url = "";
     String hotel;
     AsyncHttpTask a;
+    TextView errText;
+    Button retry;
+    LinearLayout lyt,orders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view_orders);
+
+        orders = (LinearLayout) findViewById(R.id.orders);
+        lyt = (LinearLayout) findViewById(R.id.errLayout);
+        errText = (TextView) findViewById(R.id.errText);
+
+        retry = (Button) findViewById(R.id.retry);
+        retry.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                lyt.setVisibility(View.INVISIBLE);
+                snackbar.dismiss();
+                a = new AsyncHttpTask();
+                a.execute(url);
+            }
+        });
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -65,7 +89,6 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
                 Color.GREEN, Color.RED, Color.BLUE, Color.YELLOW);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
         hotel = pref.getString("hotel", null);
@@ -109,16 +132,9 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
-//        final ProgressDialog progressDialog = new ProgressDialog(Orders.this,
-//                R.style.AppTheme_Dark_Dialog);
-
         @Override
         protected void onPreExecute() {
-            //progressBar.setVisibility(View.VISIBLE);
-//            progressDialog.setIndeterminate(true);
-//            progressDialog.setMessage("Fetching Orders...");
-//            progressDialog.show();
-            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -131,67 +147,67 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
                 int statusCode = urlConnection.getResponseCode();
 
                 if (statusCode == 200) {
-                    BufferedReader r = new BufferedReader(
-                            new InputStreamReader(
-                                    urlConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        response.append(line);
+                    try {
+                        BufferedReader r = new BufferedReader(
+                                new InputStreamReader(
+                                        urlConnection.getInputStream()));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = r.readLine()) != null) {
+                            response.append(line);
+                        }
+                        parseResult(response.toString());
+                        result = 1;
+                    } catch (Exception E) {
+                        result = 0;
                     }
-                    parseResult(response.toString());
-                    result = 1;
                 } else {
                     result = 0;
                 }
             } catch (Exception e) {
                 Log.d(TAG, e.getLocalizedMessage());
+                result = -1;
             }
             return result;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
-            progressBar.setVisibility(View.GONE);
-//            progressDialog.dismiss();
+//            progressBar.setVisibility(View.GONE);
             swipeRefreshLayout.setRefreshing(false);
 
             if (result == 1) {
                 adapter = new OrderListAdapter(Orders.this, feedsList);
                 mRecyclerView.setAdapter(adapter);
+                lyt.setVisibility(View.GONE);
+            }else if (result == 0) {
+                errText.setText("No Orders for the given day.");
+                lyt.setVisibility(View.VISIBLE);
+                snackbar = Snackbar
+                        .make(orders, "No Orders for the given day.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        })
+                        .setActionTextColor(Color.YELLOW);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                snackbar.show();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Orders.this);
-                builder.setCancelable(true);
-                if (result == -1)
-                    builder.setMessage("Something seems to be wrong with the internet.");
-                else
-                    builder.setMessage("No Orders Received");
-                builder.setTitle("Oops!!");
-                builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                    }
-                });
-
-                builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                });
-                AlertDialog a = builder.create();
-                a.show();
-                Button bq = a.getButton(DialogInterface.BUTTON_NEGATIVE);
-                Button bq2 = a.getButton(DialogInterface.BUTTON_POSITIVE);
-                bq.setTextColor(ContextCompat.getColor(Orders.this, R.color.colorPrimary));
-                bq2.setTextColor(ContextCompat.getColor(Orders.this, R.color.colorPrimary));
+                errText.setText("No Internet Connection.");
+                lyt.setVisibility(View.VISIBLE);
+                snackbar = Snackbar
+                        .make(orders, "No. Internet Connection.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                snackbar.dismiss();
+                            }
+                        })
+                        .setActionTextColor(Color.YELLOW);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                snackbar.show();
             }
         }
     }
@@ -210,6 +226,7 @@ public class Orders extends AppCompatActivity implements SwipeRefreshLayout.OnRe
                 item.setID(post.optString("ID"));
                 item.setTable(post.optString("TableName"));
                 item.setPay(post.optString("Payment"));
+                item.setDone(post.optString("Done"));
                 item.setOID(post.optString("OID"));
                 item.setConfirm(post.optString("Confirm"));
                 item.setContact(post.optString("Contact"));

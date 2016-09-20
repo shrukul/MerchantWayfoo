@@ -55,6 +55,7 @@ public class Search extends AppCompatActivity {
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String name = pref.getString("hotel",null);
+        System.out.println("hotel: "+name);
         final String url = "http://wayfoo.com/hotel.php?name="+name;
         a = new AsyncHttpTask();
         a.execute(url);
@@ -87,6 +88,7 @@ public class Search extends AppCompatActivity {
                     while ((line = r.readLine()) != null) {
                         response.append(line);
                     }
+                    System.out.println("data: "+response);
                     parseResult(response.toString());
                     result = 1;
                 } else {
@@ -148,6 +150,7 @@ public class Search extends AppCompatActivity {
                 JSONObject post = posts.optJSONObject(i);
                 FeedItemHotel item = new FeedItemHotel();
                 item.setID(Integer.parseInt(post.optString("ID")));
+                item.setItemID(post.optString("ItemID"));
                 item.setTitle(post.optString("Name"));
                 item.setType(post.optString("Type"));
                 item.setPrice(post.optString("Price"));
@@ -180,7 +183,8 @@ public class Search extends AppCompatActivity {
             for (int i = 0; i < feedsList.size(); i++) {
 
                 final String text = feedsList.get(i).getTitle().toLowerCase();
-                if (text.contains(query)) {
+                final String text1 = feedsList.get(i).getItemID().toLowerCase();
+                if (text.contains(query) || text1.contains(query)) {
                     filteredList.add(feedsList.get(i));
                 }
             }

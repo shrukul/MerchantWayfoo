@@ -95,7 +95,7 @@ public class PerOrder extends AppCompatActivity {
         price.setText(a3);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        confirm = (Button) findViewById(R.id.confirm);
+//        confirm = (Button) findViewById(R.id.confirm);
         cancel = (Button) findViewById(R.id.cancel);
         done = (Button) findViewById(R.id.done);
         listView = (ListView) findViewById(R.id.listView1);
@@ -103,13 +103,13 @@ public class PerOrder extends AppCompatActivity {
         final String url = "http://wayfoo.com/perOrderMerchant.php?OID=" + oid;
         a = new AsyncHttpTask();
         a.execute(url);
-        confirm.setOnClickListener(new View.OnClickListener() {
+/*        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfirmTask ct = new ConfirmTask();
                 ct.execute("1", oid);
             }
-        });
+        });*/
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

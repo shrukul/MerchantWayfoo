@@ -97,13 +97,19 @@ public class OrderListAdapter extends
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         customViewHolder.price.setText(SS);
 
-        if (Html.fromHtml(feedItem.getConfirm()).toString().equals("0")) {
-            SS = new SpannableStringBuilder("Pending");
+        if (Html.fromHtml(feedItem.getDone()).toString().equals("0")) {
+            String status = "";
+            if(mc.getClass().getSimpleName().equals("Orders")) {
+                status = "Pending";
+            } else {
+                status = "Cancelled";
+            }
+            SS = new SpannableStringBuilder(status);
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             customViewHolder.textView.setText(SS);
         } else {
-            SS = new SpannableStringBuilder("Confirmed");
+            SS = new SpannableStringBuilder("Delivered");
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             customViewHolder.textView.setText(SS);

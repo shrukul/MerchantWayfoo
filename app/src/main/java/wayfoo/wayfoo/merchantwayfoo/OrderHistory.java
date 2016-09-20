@@ -153,6 +153,7 @@ public class OrderHistory extends AppCompatActivity {
             if (result == 1) {
                 adapter = new OrderListAdapter(OrderHistory.this, feedsList);
                 mRecyclerView.setAdapter(adapter);
+                lyt.setVisibility(View.GONE);
             } else if (result == 0) {
                 errText.setText("No Orders for the given day.");
                 lyt.setVisibility(View.VISIBLE);
@@ -201,6 +202,7 @@ public class OrderHistory extends AppCompatActivity {
                 item.setPay(post.optString("Payment"));
                 item.setOID(post.optString("OID"));
                 item.setConfirm(post.optString("Confirm"));
+                item.setDone(post.optString("Done"));
                 item.setContact(post.optString("Contact"));
                 item.setAddr(post.optString("Addr"));
                 feedsList.add(item);

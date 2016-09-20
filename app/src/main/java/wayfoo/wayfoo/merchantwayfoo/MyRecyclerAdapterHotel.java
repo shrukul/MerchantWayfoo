@@ -52,10 +52,10 @@ public class MyRecyclerAdapterHotel extends
         RecyclerView.Adapter<MyRecyclerAdapterHotel.CustomViewHolder> {
 
     private final Context mContext;
-    private static Context mc;
-    static String tag = "Menu";
+    private Context mc;
+    String tag = "Menu";
 
-    public static class CustomViewHolder extends RecyclerView.ViewHolder {
+    public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView textView, price, itemID;
         Button plus;
@@ -74,10 +74,10 @@ public class MyRecyclerAdapterHotel extends
 
     }
 
-    private static List<FeedItemHotel> feedItemList;
+    private List<FeedItemHotel> feedItemList;
 
     public MyRecyclerAdapterHotel(Context context, List<FeedItemHotel> feedItemList) {
-        MyRecyclerAdapterHotel.feedItemList = feedItemList;
+        this.feedItemList = feedItemList;
         this.mContext = context;
     }
 

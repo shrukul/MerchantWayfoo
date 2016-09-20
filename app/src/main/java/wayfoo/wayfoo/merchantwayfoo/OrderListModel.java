@@ -8,7 +8,7 @@ public class OrderListModel {
     private String title;
     private String total;
     private String table;
-    private String pay,contact,addr;
+    private String pay,contact,addr,done;
 
     public String getConfirm() {
         return confirm;
@@ -16,6 +16,14 @@ public class OrderListModel {
 
     public void setConfirm(String confirm) {
         this.confirm = confirm;
+    }
+
+    public String getDone() {
+        return done;
+    }
+
+    public void setDone(String done) {
+        this.done = done;
     }
 
     private String confirm;
