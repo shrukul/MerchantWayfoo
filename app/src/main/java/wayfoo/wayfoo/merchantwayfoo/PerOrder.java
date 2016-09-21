@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static wayfoo.wayfoo.merchantwayfoo.Constants.FIRST_COLUMN;
+import static wayfoo.wayfoo.merchantwayfoo.Constants.FOURTH_COLUMN;
 import static wayfoo.wayfoo.merchantwayfoo.Constants.SECOND_COLUMN;
 import static wayfoo.wayfoo.merchantwayfoo.Constants.THIRD_COLUMN;
 
@@ -60,8 +61,9 @@ public class PerOrder extends AppCompatActivity {
     private Toolbar mToolbar;
     ListView listView;
     Button confirm, done, cancel;
-    TextView phone, addr, price;
+    TextView phone, addr, price,time;
     LinearLayout optionsLayout;
+    String timex = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class PerOrder extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.phone);
         addr = (TextView) findViewById(R.id.addr);
         price = (TextView) findViewById(R.id.price);
+        time = (TextView) findViewById(R.id.time);
         Bundle b = getIntent().getExtras();
         String a1 = b.getString("contact");
         String a2 = b.getString("addr");
@@ -93,6 +96,7 @@ public class PerOrder extends AppCompatActivity {
         phone.setText(a1);
         addr.setText(a2);
         price.setText(a3);
+
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 //        confirm = (Button) findViewById(R.id.confirm);
@@ -184,6 +188,8 @@ public class PerOrder extends AppCompatActivity {
 //            progressDialog.dismiss();
 
             if (result == 1) {
+                if(!timex.equals(null))
+                    time.setText(timex);
                 PerOrderAdapter adapter = new PerOrderAdapter(PerOrder.this, list);
                 listView.setAdapter(adapter);
             } else {
@@ -233,7 +239,9 @@ public class PerOrder extends AppCompatActivity {
                 temp.put(SECOND_COLUMN, post.optString("Quantity"));
                 System.out.println(post.optString("ItemID"));
                 System.out.println(post);
-                temp.put(THIRD_COLUMN, String.valueOf(Float.parseFloat(post.optString("Amount")) * Float.parseFloat(post.optString("Quantity"))));
+                timex = (post.optString("Time"));
+                temp.put(FOURTH_COLUMN, String.valueOf(Float.parseFloat(post.optString("Amount")) * Float.parseFloat(post.optString("Quantity"))));
+                temp.put(THIRD_COLUMN, post.optString("ItemID"));
                 list.add(temp);
             }
         } catch (JSONException e) {

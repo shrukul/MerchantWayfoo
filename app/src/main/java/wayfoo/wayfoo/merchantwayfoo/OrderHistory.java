@@ -205,7 +205,8 @@ public class OrderHistory extends AppCompatActivity {
                 item.setDone(post.optString("Done"));
                 item.setContact(post.optString("Contact"));
                 item.setAddr(post.optString("Addr"));
-                feedsList.add(item);
+                if (!post.optString("Done").equals("0"))
+                    feedsList.add(item);
             }
         } catch (JSONException e) {
             e.printStackTrace();

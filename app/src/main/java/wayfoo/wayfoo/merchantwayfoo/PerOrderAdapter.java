@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static wayfoo.wayfoo.merchantwayfoo.Constants.FIRST_COLUMN;
+import static wayfoo.wayfoo.merchantwayfoo.Constants.FOURTH_COLUMN;
 import static wayfoo.wayfoo.merchantwayfoo.Constants.SECOND_COLUMN;
 import static wayfoo.wayfoo.merchantwayfoo.Constants.THIRD_COLUMN;
 
@@ -25,6 +26,7 @@ public class PerOrderAdapter extends BaseAdapter{
     TextView txtFirst;
     TextView txtSecond;
     TextView txtThird;
+    TextView txtFourth;
     public PerOrderAdapter(Activity activity,ArrayList<HashMap<String, String>> list){
         super();
         this.activity=activity;
@@ -61,17 +63,19 @@ public class PerOrderAdapter extends BaseAdapter{
 
         if(convertView == null){
 
-            convertView=inflater.inflate(R.layout.column_row, null);
+            convertView=inflater.inflate(R.layout.column_row_per, null);
 
             txtFirst=(TextView) convertView.findViewById(R.id.name);
             txtSecond=(TextView) convertView.findViewById(R.id.quantity);
-            txtThird=(TextView) convertView.findViewById(R.id.amt);
+            txtThird=(TextView) convertView.findViewById(R.id.itemID);
+            txtFourth=(TextView) convertView.findViewById(R.id.amt);
         }
 
         HashMap<String, String> map=list.get(position);
         txtFirst.setText(map.get(FIRST_COLUMN));
         txtSecond.setText(map.get(SECOND_COLUMN));
         txtThird.setText(map.get(THIRD_COLUMN));
+        txtFourth.setText(map.get(FOURTH_COLUMN));
 
         return convertView;
     }

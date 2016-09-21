@@ -55,7 +55,7 @@ public class OrderListAdapter extends
                     intent.putExtra("addr", Address);
                     intent.putExtra("total", price);
                     String className = mc.getClass().getName();
-                    if(className.substring(className.lastIndexOf('.') + 1).equals("OrderHistory")) {
+                    if (className.substring(className.lastIndexOf('.') + 1).equals("OrderHistory")) {
                         intent.putExtra("showOptions", false);
                     }
                     mc.startActivity(intent);
@@ -97,19 +97,20 @@ public class OrderListAdapter extends
                 Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         customViewHolder.price.setText(SS);
 
-        if (Html.fromHtml(feedItem.getDone()).toString().equals("0")) {
-            String status = "";
-            if(mc.getClass().getSimpleName().equals("Orders")) {
-                status = "Pending";
-            } else {
-                status = "Cancelled";
-            }
-            SS = new SpannableStringBuilder(status);
+        if (Html.fromHtml(feedItem.getDone()).toString().equals("1")) {
+            SS = new SpannableStringBuilder("Confirmed");
+            SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
+                    Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            customViewHolder.textView.setText(SS);
+        } else if (Html.fromHtml(feedItem.getDone()).toString().trim().equals("-1")) {
+            SS = new SpannableStringBuilder("Cancelled");
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             customViewHolder.textView.setText(SS);
         } else {
-            SS = new SpannableStringBuilder("Delivered");
+            String status = "";
+            status = "Pending";
+            SS = new SpannableStringBuilder(status);
             SS.setSpan(new CustomTypeFace("", font1), 0, SS.length(),
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             customViewHolder.textView.setText(SS);
