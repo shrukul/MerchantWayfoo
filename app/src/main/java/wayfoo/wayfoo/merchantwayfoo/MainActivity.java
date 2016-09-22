@@ -40,7 +40,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button menu, order, avail, history;
+    Button menu, order, avail, history,close;
     private Toolbar mToolbar;
 /*    private ToggleButton tb;*/
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         order = (Button) findViewById(R.id.order);
         avail = (Button) findViewById(R.id.avail);
         history = (Button) findViewById(R.id.history);
+        close = (Button) findViewById(R.id.close);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, DateSelect.class));
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CloseHotel.class));
             }
         });
 

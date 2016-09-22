@@ -120,6 +120,12 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".CloseHotel"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".DateSelect"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"

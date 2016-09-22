@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    tools:context="wayfoo.wayfoo.merchantwayfoo.MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Waiting for connection."
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/status"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Close"
+        android:id="@+id/close"
+        android:clickable="true"
+        android:visibility="gone"
+        style="@style/MyMaterialTheme.SettingsButton" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Open"
+        android:id="@+id/open"
+        android:visibility="gone"
+        android:clickable="true"
+        style="@style/MyMaterialTheme.SettingsButton" />
+
+</LinearLayout>

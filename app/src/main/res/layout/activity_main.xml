@@ -44,6 +44,14 @@
         android:clickable="true"
         style="@style/MyMaterialTheme.SettingsButton" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Close/Open Hotel"
+        android:id="@+id/close"
+        android:clickable="true"
+        style="@style/MyMaterialTheme.SettingsButton" />
+
 <!--    <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
