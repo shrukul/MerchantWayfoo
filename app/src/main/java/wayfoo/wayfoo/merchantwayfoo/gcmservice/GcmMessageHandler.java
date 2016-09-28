@@ -61,6 +61,7 @@ public class GcmMessageHandler extends GcmListenerService {
                 .setContentTitle("MerchantWayFoo")
                 .setContentText(typ)
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(body));
